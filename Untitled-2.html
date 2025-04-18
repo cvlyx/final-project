@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MZTEC University - Payment Portal</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #002147;
+      --secondary-color: #ffd700;
+      --accent-color: #e63946;
+      --text-color: #2d3748;
+      --light-bg: #f8f9fa;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    /* Navigation */
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 5%;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(0, 33, 71, 0.95);
+      transition: background 0.3s ease;
+    }
+    
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--secondary-color);
+    }
+    
+    .register-btn {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+      border-radius: 25px;
+      padding: 0.8rem 2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    
+    .register-btn:hover {
+      background: var(--accent-color);
+      transform: scale(1.05);
+    }
+    
+    /* Hero Section */
+    .payment-hero {
+      background: linear-gradient(rgba(0, 33, 71, 0.9), rgba(0, 33, 71, 0.9)), 
+                  url('https://images.unsplash.com/photo-1607860108855-64acf2078ed9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding-top: 80px;
+      margin-bottom: 3rem;
+    }
+    
+    .payment-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Payment Container */
+    .payment-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0 5%;
+      margin-bottom: 5rem;
+      flex-wrap: wrap;
+    }
+    
+    /* Payment Summary */
+    .payment-summary {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      height: fit-content;
+    }
+    
+    .payment-summary h2 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .summary-total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: var(--primary-color);
+    }
+    
+    /* Payment Methods */
+    .payment-methods {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .payment-methods h2 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    .payment-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .payment-tab {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .payment-tab.active {
+      border-bottom: 3px solid var(--secondary-color);
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .payment-tab:hover {
+      color: var(--primary-color);
+    }
+    
+    .payment-content {
+      display: none;
+    }
+    
+    .payment-content.active {
+      display: block;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus {
+      border-color: var(--secondary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+    }
+    
+    .card-icons {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .card-icon {
+      width: 40px;
+      height: 25px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .row {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .row .form-group {
+      flex: 1;
+    }
+    
+    .pay-now-btn {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+      border: none;
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .pay-now-btn:hover {
+      background: #e6c300;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    }
+    
+    /* Mobile Payment Options */
+    .mobile-payment-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .mobile-payment-option:hover {
+      border-color: var(--secondary-color);
+      background: rgba(255, 215, 0, 0.05);
+    }
+    
+    .mobile-payment-option img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    
+    /* Bank Payment Option */
+    .bank-details {
+      background: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .bank-details p {
+      margin-bottom: 0.5rem;
+    }
+    
+    .bank-details strong {
+      color: var(--primary-color);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem 5%;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .payment-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .payment-container {
+        flex-direction: column;
+      }
+      
+      .payment-summary,
+      .payment-methods {
+        max-width: 100%;
+      }
+      
+      .row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-container">
+    <div class="logo">MZTEC</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="admission.html">Admissions</a>
+      <a href="#contact">Contact</a>
+      <a href="login.html" class="register-btn">Student Portal</a>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section class="payment-hero">
+    <div>
+      <h1>Complete Your Admission</h1>
+      <p>Secure your place at MZTEC University with payment</p>
+    </div>
+  </section>
+  
+  <!-- Payment Container -->
+  <div class="payment-container">
+    <!-- Payment Summary -->
+    <div class="payment-summary">
+      <h2>Payment Summary</h2>
+      
+      <div class="summary-item">
+        <span>Application Fee:</span>
+        <span>MK 5,000</span>
+      </div>
+      
+      <div class="summary-item">
+        <span>Registration Fee:</span>
+        <span>MK 15,000</span>
+      </div>
+      
+      <div class="summary-item">
+        <span>Selected Course:</span>
+        <span id="course-name">Administrative Studies</span>
+      </div>
+      
+      <div class="summary-item">
+        <span>First Term/Semester:</span>
+        <span id="course-fee">MK 70,000</span>
+      </div>
+      
+      <div class="summary-total">
+        <span>Total Amount Due:</span>
+        <span id="total-amount">MK 90,000</span>
+      </div>
+      
+      <div style="margin-top: 2rem; font-size: 0.9rem; color: #666;">
+        <p><i class="material-icons" style="vertical-align: middle;">info</i> Payment confirms your admission</p>
+        <p><i class="material-icons" style="vertical-align: middle;">schedule</i> Fees are non-refundable after 7 days</p>
+      </div>
+    </div>
+    
+    <!-- Payment Methods -->
+    <div class="payment-methods">
+      <h2>Payment Methods</h2>
+      
+      <div class="payment-tabs">
+        <div class="payment-tab active" data-tab="card">Credit/Debit Card</div>
+        <div class="payment-tab" data-tab="mobile">Mobile Money</div>
+        <div class="payment-tab" data-tab="bank">Bank Transfer</div>
+      </div>
+      
+      <!-- Card Payment -->
+      <div class="payment-content active" id="card-payment">
+        <div class="card-icons">
+          <div class="card-icon">VISA</div>
+          <div class="card-icon">MC</div>
+          <div class="card-icon">AEX</div>
+        </div>
+        
+        <form id="card-form">
+          <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="card-name">Name on Card</label>
+            <input type="text" id="card-name" placeholder="John Doe" required>
+          </div>
+          
+          <div class="row">
+            <div class="form-group">
+              <label for="expiry-date">Expiry Date</label>
+              <input type="text" id="expiry-date" placeholder="MM/YY" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" placeholder="123" required>
+            </div>
+          </div>
+          
+          <button type="submit" class="pay-now-btn">
+            <i class="material-icons" style="vertical-align: middle;">lock</i> Pay Now
+          </button>
+        </form>
+      </div>
+      
+      <!-- Mobile Money Payment -->
+      <div class="payment-content" id="mobile-payment">
+        <div class="mobile-payment-option">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Airtel-Money-Logo.svg/1200px-Airtel-Money-Logo.svg.png" alt="Airtel Money">
+          <div>
+            <h3>Airtel Money</h3>
+            <p>Pay via Airtel Money</p>
+          </div>
+        </div>
+        
+        <div class="mobile-payment-option">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/TNM.png/640px-TNM.png" alt="TNM Mpamba">
+          <div>
+            <h3>TNM Mpamba</h3>
+            <p>Pay via TNM Mpamba</p>
+          </div>
+        </div>
+        
+        <form id="mobile-form" style="margin-top: 1rem;">
+          <div class="form-group">
+            <label for="mobile-number">Mobile Number</label>
+            <input type="tel" id="mobile-number" placeholder="0999 123 456" required>
+          </div>
+          
+          <button type="submit" class="pay-now-btn">
+            <i class="material-icons" style="vertical-align: middle;">send</i> Request Payment
+          </button>
+        </form>
+      </div>
+      
+      <!-- Bank Transfer -->
+      <div class="payment-content" id="bank-payment">
+        <div class="bank-details">
+          <p><strong>Bank Name:</strong> National Bank of Malawi</p>
+          <p><strong>Account Name:</strong> MZTEC University</p>
+          <p><strong>Account Number:</strong> 1001234567</p>
+          <p><strong>Branch:</strong> Mzuzu Branch</p>
+          <p><strong>Swift Code:</strong> NBMAMWMW</p>
+          <p><strong>Reference:</strong> Your Application ID</p>
+        </div>
+        
+        <form id="bank-form">
+          <div class="form-group">
+            <label for="deposit-slip">Upload Deposit Slip</label>
+            <input type="file" id="deposit-slip" accept="image/*,.pdf" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="transaction-id">Transaction ID</label>
+            <input type="text" id="transaction-id" placeholder="Enter transaction reference" required>
+          </div>
+          
+          <button type="submit" class="pay-now-btn">
+            <i class="material-icons" style="vertical-align: middle;">upload</i> Submit Proof
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2023 MZTEC University. All rights reserved.</p>
+    <p>Need help? Contact admissions@mzuzutec.edu.mw or call +265 123 456 789</p>
+  </footer>
+
+  <script>
+       // Simulate payment process
+       const payBtn = document.getElementById('pay-btn');
+    const paymentStatus = document.getElementById('payment-status');
+    payBtn.addEventListener('click', function() {
+      // In a real application, payment integration would be here.
+      paymentStatus.classList.remove('hidden');
+      payBtn.disabled = true;
+      payBtn.textContent = 'Payment Completed';
+    });
+
+    // Application form submission handling
+    document.getElementById('application-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for applying! Your application is being processed.');
+      this.reset();
+      paymentStatus.classList.add('hidden');
+      payBtn.disabled = false;
+      payBtn.textContent = 'Proceed to Payment';
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      if(window.scrollY > 50) {
+        document.querySelector('nav').classList.add('shadow-md');
+      } else {
+        document.querySelector('nav').classList.remove('shadow-md');
+      }
+    });
+    // Toggle Menu for Mobile
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      document.getElementById('menu').classList.toggle('hidden');
+    });
+    function makePayment(){
+      PaychanguCheckout({
+        "public_key": "pub-test-62kpNbCXil1OeQWZSSh02oRkMQiqQFVJ",
+        "tx_ref": '' + Math.floor((Math.random() * 1000000000) + 1),
+        "amount": 10000,
+        "currency": "MWK",
+        "callback_url": "https://example.com/callbackurl",
+        "return_url": "https://example.com/returnurl",
+        "customer":{
+          "email": "cvlyx@proton.me",
+          "first_name":"Mac",
+          "last_name":"Phiri",
+        },
+        "customization": {
+          "title": "Test Payment",
+          "description": "Payment Description",
+        },
+        "meta": {
+          "uuid": "uuid",
+          "response": "Response"
+        }
+      });
+    }
+
+    // Tab functionality
+    const tabs = document.querySelectorAll('.payment-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and content
+        document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.payment-content').forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked tab and corresponding content
+        tab.classList.add('active');
+        const tabId = tab.getAttribute('data-tab');
+        document.getElementById(`${tabId}-payment`).classList.add('active');
+      });
+    });
+    
+    // Get course details from URL parameters
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseName = urlParams.get('course') || 'Administrative Studies';
+      const courseFee = urlParams.get('fee') || 'MK 70,000';
+      
+      document.getElementById('course-name').textContent = courseName;
+      document.getElementById('course-fee').textContent = courseFee;
+      
+      // Calculate total (application + registration + first term)
+      const total = 5000 + 15000 + parseInt(courseFee.replace(/\D/g, ''));
+      document.getElementById('total-amount').textContent = `MK ${total.toLocaleString()}`;
+    });
+    
+    // Form submission
+    document.getElementById('card-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Payment processing would happen here in a real implementation');
+      // window.location.href = 'success.html';
+    });
+    
+    document.getElementById('mobile-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Mobile payment request would be sent in a real implementation');
+    });
+    
+    document.getElementById('bank-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Bank transfer proof would be submitted in a real implementation');
+    });
+  </script>
+</body>
+</html>
