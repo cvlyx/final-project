@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBET Assessment Form</title>
+    <style>
+            .date-input {
+                margin: 0.5rem 0;
+            }
+    
+            #date-input-7 {
+                margin: 0.5rem 0;
+            }
+    
+            #date-input-5 {
+                margin: 0.5rem 0;
+            }
+
+            .date-input {
+                margin: 0.5rem 0;
+            }
+    
+            .signature-input {
+                margin-top: 0.5rem;
+            }
+
+            .signature-input-margin {
+                margin-top: 0.5rem;
+            }
+    
+            .signature-margin-top {
+                margin-top: 0.5rem;
+            }
+    
+            .key-info {
+                margin-top: 2rem;
+                font-size: 0.9rem;
+            }
+    
+            .footer-info {
+                text-align: center;
+                margin-top: 2rem;
+                padding-top: 2rem;
+                border-top: 2px solid var(--border);
+            }
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --text: #1f2937;
+            --bg: #f8fafc;
+            --container-bg: #ffffff;
+            --border: #e5e7eb;
+            --table-header: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .assessment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .assessment-table th,
+        .assessment-table td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .assessment-table th {
+            background-color: var(--table-header);
+            font-weight: 600;
+        }
+
+        .attempt-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .attempt-group {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        .rating-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .rating-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            margin: 1rem 0;
+            resize: vertical;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            background: var(--container-bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .date-input {
+            margin: 0.5rem 0;
+        }
+
+        .dark-theme {
+            --text: #f3f4f6;
+            --container-bg: #374151;
+            --border: #4b5563;
+            --table-header: #1f2937;
+        }
+
+        .date-input {
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .attempt-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .assessment-table {
+                overflow-x: auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <span>🌓</span> Toggle Theme
+    </button>
+    
+    <div class="container">
+        <h1>COMPETENCE BASED EDUCATION AND TRAINING (CBET) • APPRENTICESHIP TRAINING</h1>
+        <h2>MODULE THREE OF LEVEL TWO - INSTALLING COMPUTER SYSTEMS 3.1 Installing Systems</h2>
+
+        <table class="assessment-table">
+            <thead>
+                <tr>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                    <th rowspan="2">Tolerance</th>
+                    <th colspan="2">1st Attempt</th>
+                    <th colspan="2">2nd Attempt</th>
+                    <th colspan="2">3rd Attempt</th>
+                </tr>
+                <tr>
+                    <th>Yes</th>
+                    <th>No</th>
+                    <th>Yes</th>
+                    <th>No</th>
+                    <th>Yes</th>
+                    <th>No</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Are specifications acquired correctly?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="First Attempt Yes"></td><td><input type="checkbox" title="First Attempt No"></td>
+                    <td><input type="checkbox" title="Second Attempt Yes"></td><td><input type="checkbox" title="Second Attempt No"></td>
+                    <td><input type="checkbox" title="Third Attempt Yes"></td><td><input type="checkbox" title="Third Attempt No"></td>
+                </tr>
+                <tr>
+                    <td>Are system components acquired correctly?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="Third Attempt Yes"></td><td><input type="checkbox" title="Third Attempt No"></td>
+                    <td><input type="checkbox" title="Second Attempt Yes"></td><td><input type="checkbox" title="Second Attempt No"></td>
+                    <td><input type="checkbox" title="Third Attempt Yes"></td><td><input type="checkbox" title="Third Attempt No"></td>
+                </tr>
+                <tr>
+                    <td>Is installation manual read properly?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                </tr>
+                <tr>
+                    <td>Are System components installed correctly?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                </tr>
+                <tr>
+                    <td>Is the system tested properly?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                    <td><input type="checkbox" title="Yes"></td><td><input type="checkbox" title="No"></td>
+                    <td><input type="checkbox" title="Checkbox 1"></td><td><input type="checkbox" title="Checkbox 2"></td>
+                </tr>
+                <tr>
+                    <td>Is the system documented properly?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="Option 1"></td><td><input type="checkbox" title="Option 2"></td>
+                    <td><input type="checkbox" title="Option 1"></td><td><input type="checkbox" title="Option 2"></td>
+                    <td><input type="checkbox" title="Option 1"></td><td><input type="checkbox" title="Option 2"></td>
+                </tr>
+                <tr>
+                    <td>Is willingness to follow instructions demonstrated?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="Option 1"></td><td><input type="checkbox" title="Option 2"></td>
+                    <td><input type="checkbox" title="Option 1"></td><td><input type="checkbox" title="Option 2"></td>
+                    <td><input type="checkbox" title="Option 1"></td><td><input type="checkbox" title="Option 2"></td>
+                </tr>
+                <tr>
+                    <td>Is cost consciousness demonstrated?</td>
+                    <td>None</td>
+                <label for="date-input">Date:</label>
+                <input type="date" id="date-input" class="date-input" title="Select a date">
+                    <td><input type="checkbox" title="Option 1"></td><td><input type="checkbox" title="Option 2"></td>
+                <input type="text" placeholder="Signature" class="signature-input">
+                </tr>
+                <tr>
+                    <td>Is time consciousness demonstrated?</td>
+                    <td>None</td>
+                    <td><input type="checkbox" title="Time Consciousness Yes"></td><td><input type="checkbox" title="Time Consciousness No"></td>
+                    <td><input type="checkbox" title="Time Consciousness Yes"></td><td><input type="checkbox" title="Time Consciousness No"></td>
+                    <td><input type="checkbox" title="Time Consciousness Yes"></td><td><input type="checkbox" title="Time Consciousness No"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Achieved?</h3>
+                <label for="date-input-2">Date:</label>
+                <input type="date" id="date-input-2" class="date-input" title="Select a date" placeholder="YYYY-MM-DD">
+            <div class="attempt-group">
+                <input type="text" placeholder="Signature" class="signature-input-margin">
+                <input type="text" placeholder="Signature" class="signature-margin-top">
+                <label for="date-input-3">Date:</label>
+                <input type="date" id="date-input-3" class="date-input" title="Select a date" placeholder="YYYY-MM-DD">
+                <input type="text" placeholder="Assessor's Name">
+                <input type="text" placeholder="Signature" style="margin-top: 0.5rem">
+                <label for="date-input-4">Date:</label>
+                <label for="date-input-5">Date:</label>
+                <label for="date-input-6">Date:</label>
+                <label for="date-input-7">Date:</label>
+                <input type="date" id="date-input-7" class="date-input" title="Select a date" placeholder="YYYY-MM-DD">
+            <div class="attempt-group">
+                <h4>2nd Attempt</h4>
+                <input type="text" placeholder="Assessment Venue">
+                <input type="date" style="margin: 0.5rem 0">
+                <input type="text" placeholder="Assessor's Name">
+                <input type="text" placeholder="Signature" style="margin-top: 0.5rem">
+            </div>
+            <div class="attempt-group">
+                <h4>3rd Attempt</h4>
+                <input type="text" placeholder="Assessment Venue">
+                <input  type="date" style="margin: 0.5rem 0">
+                <input type="text" placeholder="Assessor's Name">
+                <input type="text" placeholder="Signature" style="margin-top: 0.5rem">
+            </div>
+        </div>
+
+        <h3>General Values and Attitudes</h3>
+        <div class="rating-grid">
+            <div class="rating-item">
+                <span>Commitment towards work</span>
+                <div class="radio-group">
+                    <label><input type="radio" name="commitment">1</label>
+                    <label><input type="radio" name="commitment">2</label>
+                    <label><input type="radio" name="commitment">3</label>
+                    <label><input type="radio" name="commitment">4</label>
+                    <label><input type="radio" name="commitment">5</label>
+                </div>
+            </div>
+            <div class="rating-item">
+                <span>Absenteeism</span>
+                <div class="radio-group">
+                    <label><input type="radio" name="absenteeism">1</label>
+                    <label><input type="radio" name="absenteeism">2</label>
+                    <label><input type="radio" name="absenteeism">3</label>
+                    <label><input type="radio" name="absenteeism">4</label>
+                    <label><input type="radio" name="absenteeism">5</label>
+                </div>
+            </div>
+            <div class="rating-item">
+                <span>General Behavior</span>
+                <div class="radio-group">
+                    <label><input type="radio" name="behavior">1</label>
+                    <label><input type="radio" name="behavior">2</label>
+                    <label><input type="radio" name="behavior">3</label>
+                    <label><input type="radio" name="behavior">4</label>
+                    <label><input type="radio" name="behavior">5</label>
+                </div>
+            </div>
+            <div class="rating-item">
+                <span>Cooperates with fellow workers</span>
+                <div class="radio-group">
+                    <label><input type="radio" name="cooperation">1</label>
+        <textarea rows="4" title="Comments"></textarea>
+                    <label><input type="radio" name="cooperation">3</label>
+        <div class="key-info">
+                    <label><input type="radio" name="cooperation">5</label>
+                </div>
+            </div>
+            <div class="rating-item">
+        <div class="footer-info">
+                <div class="radio-group">
+                    <label><input type="radio" name="care">1</label>
+                    <label><input type="radio" name="care">2</label>
+                    <label><input type="radio" name="care">3</label>
+                    <label><input type="radio" name="care">4</label>
+                    <label><input type="radio" name="care">5</label>
+                </div>
+            </div>
+        </div>
+
+        <h3>Any other comments about the trainee</h3>
+        <textarea rows="4" title="Provide your comments" placeholder="Enter your comments here"></textarea>
+
+        <div style="margin-top: 2rem; font-size: 0.9rem;">
+            <strong>KEY:</strong> 5=Excellent, 4=Very Good, 3=Good, 2=Poor, 1=Very Poor<br>
+            <em>A trainee who scores below 3 needs special help for him/her to pass.</em>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border);">
+            <h3>INFORMATION & COMMUNICATION TECHNOLOGY (ICT)</h3>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+    </script>
+</body>
+</html>

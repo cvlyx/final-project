@@ -1,0 +1,408 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Live",
+    "version": "unknown"
+  },
+  "servers": [
+    {
+      "url": "https://api.paychangu.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "x-default": "",
+        "x-bearer-format": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "paths": {
+    "/payment": {
+      "post": {
+        "summary": "Initiate Transaction",
+        "description": "",
+        "operationId": "initiate-transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount",
+                  "currency",
+                  "callback_url",
+                  "return_url"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount to charge the customer."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Currency to charge in. [ 'MWK', 'USD' ]",
+                    "default": "MWK"
+                  },
+                  "tx_ref": {
+                    "type": "string",
+                    "description": "Your transaction reference. This MUST be unique for every transaction."
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "This is the first_name of your customer."
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "This is the last_name of your customer. (optional)"
+                  },
+                  "callback_url": {
+                    "type": "string",
+                    "description": "This is your IPN url, it is important for receiving payment notification. Successful transactions redirects to this url after payment. {tx_ref} is returned, so you don't need to pass it with your url"
+                  },
+                  "return_url": {
+                    "type": "string",
+                    "description": "Once the customer cancels or after multiple failed attempts, we will redirect to the return_url with the query parameters tx_ref and status of failed. (optional)"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "This is the email address of your customer. Transaction notification will be sent to this email address (optional)"
+                  },
+                  "meta": {
+                    "type": "string",
+                    "description": "You can pass extra information here. (optional)"
+                  },
+                  "uuid": {
+                    "type": "string",
+                    "description": "(optional)"
+                  },
+                  "customization": {
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "(optional)"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "(optional)"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"message\": \"Hosted payment session generated successfully.\",\n  \"status\": \"success\",\n  \"data\": {\n    \"event\": \"checkout.session:created\",\n    \"checkout_url\": \"https://test-checkout.paychangu.com/7887951180\",\n    \"data\": {\n      \"tx_ref\": \"98993331-d4f4-4840-899f-7b46cacbb9f4\",\n      \"currency\": \"MWK\",\n      \"amount\": 1000,\n      \"mode\": \"sandbox\",\n      \"status\": \"pending\"\n    }\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Hosted payment session generated successfully."
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "event": {
+                          "type": "string",
+                          "example": "checkout.session:created"
+                        },
+                        "checkout_url": {
+                          "type": "string",
+                          "example": "https://test-checkout.paychangu.com/7887951180"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "tx_ref": {
+                              "type": "string",
+                              "example": "98993331-d4f4-4840-899f-7b46cacbb9f4"
+                            },
+                            "currency": {
+                              "type": "string",
+                              "example": "MWK"
+                            },
+                            "amount": {
+                              "type": "integer",
+                              "example": 1000,
+                              "default": 0
+                            },
+                            "mode": {
+                              "type": "string",
+                              "example": "sandbox"
+                            },
+                            "status": {
+                              "type": "string",
+                              "example": "pending"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"status\": \"failed\",\n    \"message\": \"currency is required\",\n    \"data\": \"null\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "currency is required"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/verify-payment/{tx_ref}": {
+      "get": {
+        "summary": "Verify Transaction Status",
+        "description": "",
+        "operationId": "verify-transaction-status",
+        "parameters": [
+          {
+            "name": "tx_ref",
+            "in": "path",
+            "description": "Obtain the transaction ID from the tx_ref present in the response you receive after creating a transaction",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 2345
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"status\": \"success\",\n  \"message\": \"Payment details retrieved successfully.\",\n  \"data\": {\n    \"event_type\": \"checkout.payment\",\n    \"tx_ref\": \"PA54231315\",\n    \"mode\": \"live\",\n    \"type\": \"API Payment (Checkout)\",\n    \"status\": \"success\",\n    \"number_of_attempts\": 1,\n    \"reference\": \"26262633201\",\n    \"currency\": \"MWK\",\n    \"amount\": 1000,\n    \"charges\": 40,\n    \"customization\": {\n      \"title\": \"iPhone 10\",\n      \"description\": \"Online order\",\n      \"logo\": null\n    },\n    \"meta\": null,\n    \"authorization\": {\n      \"channel\": \"Card\",\n      \"card_number\": \"230377******0408\",\n      \"expiry\": \"2035-12\",\n      \"brand\": \"MASTERCARD\",\n      \"provider\": null,\n      \"mobile_number\": null,\n      \"completed_at\": \"2024-08-08T23:21:22.000000Z\"\n    },\n    \"customer\": {\n      \"email\": \"yourmail@example.com\",\n      \"first_name\": \"Mac\",\n      \"last_name\": \"Phiri\"\n    },\n    \"logs\": [\n      {\n        \"type\": \"log\",\n        \"message\": \"Attempted to pay with card\",\n        \"created_at\": \"2024-08-08T23:20:59.000000Z\"\n      },\n      {\n        \"type\": \"log\",\n        \"message\": \"Processing and verification of card payment completed successfully.\",\n        \"created_at\": \"2024-08-08T23:21:22.000000Z\"\n      }\n    ],\n    \"created_at\": \"2024-08-08T23:20:21.000000Z\",\n    \"updated_at\": \"2024-08-08T23:20:21.000000Z\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Payment details retrieved successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "event_type": {
+                          "type": "string",
+                          "example": "checkout.payment"
+                        },
+                        "tx_ref": {
+                          "type": "string",
+                          "example": "PA54231315"
+                        },
+                        "mode": {
+                          "type": "string",
+                          "example": "live"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "API Payment (Checkout)"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        },
+                        "number_of_attempts": {
+                          "type": "integer",
+                          "example": 1,
+                          "default": 0
+                        },
+                        "reference": {
+                          "type": "string",
+                          "example": "26262633201"
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "MWK"
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "example": 1000,
+                          "default": 0
+                        },
+                        "charges": {
+                          "type": "integer",
+                          "example": 40,
+                          "default": 0
+                        },
+                        "customization": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "example": "iPhone 10"
+                            },
+                            "description": {
+                              "type": "string",
+                              "example": "Online order"
+                            },
+                            "logo": {}
+                          }
+                        },
+                        "meta": {},
+                        "authorization": {
+                          "type": "object",
+                          "properties": {
+                            "channel": {
+                              "type": "string",
+                              "example": "Card"
+                            },
+                            "card_number": {
+                              "type": "string",
+                              "example": "230377******0408"
+                            },
+                            "expiry": {
+                              "type": "string",
+                              "example": "2035-12"
+                            },
+                            "brand": {
+                              "type": "string",
+                              "example": "MASTERCARD"
+                            },
+                            "provider": {},
+                            "mobile_number": {},
+                            "completed_at": {
+                              "type": "string",
+                              "example": "2024-08-08T23:21:22.000000Z"
+                            }
+                          }
+                        },
+                        "customer": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "string",
+                              "example": "yourmail@example.com"
+                            },
+                            "first_name": {
+                              "type": "string",
+                              "example": "Mac"
+                            },
+                            "last_name": {
+                              "type": "string",
+                              "example": "Phiri"
+                            }
+                          }
+                        },
+                        "logs": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "log"
+                              },
+                              "message": {
+                                "type": "string",
+                                "example": "Attempted to pay with card"
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "example": "2024-08-08T23:20:59.000000Z"
+                              }
+                            }
+                          }
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2024-08-08T23:20:21.000000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2024-08-08T23:20:21.000000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "x-readme": {
+    "headers": []
+  },
+  "x-readme-fauxas": true
+}

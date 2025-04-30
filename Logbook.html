@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT Apprentice Logbook</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #8b5cf6;
+            --text: #1f2937;
+            --bg: #f8fafc;
+            --bg-container: #ffffff;
+            --bg-section: #ffffff;
+            --border: #e5e7eb;
+            --table-border: #f3f4f6;
+            --label-color: #374151;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            padding: 2rem;
+            color: var(--text);
+            transition: background 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-container);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 12px 24px -6px rgba(0,0,0,0.1);
+            transition: background 0.3s ease;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .header-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--bg-section);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(99,102,241,0.03) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+
+        .section:hover {
+            transform: translateY(-4px);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--label-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .material-icons {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-section);
+            color: var(--text);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--bg-section);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 1.2rem;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--table-border);
+            background: var(--bg-section);
+            color: var(--text);
+        }
+
+        .skill-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.2s ease;
+            background: var(--bg-section);
+            color: var(--text);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 1.25rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 3rem auto 0;
+            box-shadow: 0 4px 6px rgba(79,70,229,0.1);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(79,70,229,0.15);
+            background: var(--secondary);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--bg-section);
+            border: none;
+            padding: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="material-icons">dark_mode</span>
+    </button>
+
+    <div class="container">
+        <h1>
+            <span class="material-icons header-icon">library_books</span>
+            ICT Apprentice Logbook
+        </h1>
+
+        <!-- Apprentice Details -->
+        <div class="section">
+            <h2 style="margin-bottom: 2rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                <span class="material-icons">person_pin</span>
+                Apprentice Details
+            </h2>
+            <div class="grid">
+                <div class="input-group">
+                    <label>
+                        <span class="material-icons">badge</span>
+                        Full Name
+                    </label>
+                    <input type="text" placeholder="John Doe">
+                </div>
+                <div class="input-group">
+                    <label>
+                        <span class="material-icons">fingerprint</span>
+                        Identity Number
+                    </label>
+                    <input type="text" placeholder="ICT-2024-001">
+                </div>
+                <div class="input-group">
+                    <label>
+                        <span class="material-icons">phone_iphone</span>
+                        Contact Number
+                    </label>
+                    <input type="tel" placeholder="+265 123 456 789">
+                </div>
+                <div class="input-group">
+                    <label>
+                        <span class="material-icons">location_on</span>
+                        District
+                    </label>
+                    <input type="text" placeholder="Mzuzu">
+                </div>
+            </div>
+        </div>
+
+        <!-- Employer Section -->
+        <div class="section">
+            <h2 style="margin-bottom: 2rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                <span class="material-icons">business_center</span>
+                Industrial Attachment
+            </h2>
+            <div class="grid">
+                <div class="input-group">
+                    <label>
+                        <span class="material-icons">apartment</span>
+                        Employer Name
+                    </label>
+                    <input type="text" placeholder="Tech Solutions Ltd">
+                </div>
+                <div class="input-group">
+                    <label>
+                        <span class="material-icons">date_range</span>
+                        Start Date
+                    </label>
+                    <input type="date" title="Select a date" placeholder="YYYY-MM-DD">
+                </div>
+                <div class="input-group">
+                    <label>
+                        <span class="material-icons">event_available</span>
+                        End Date
+                    </label>
+                    <input type="date" title="Select an end date" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="section">
+            <h2 style="margin-bottom: 2rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                <span class="material-icons">trending_up</span>
+                Weekly Progress
+            </h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Week</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Week 1</td>
+                            <td><input type="text" class="skill-input" placeholder="1.1"></td>
+                            <!-- Add more days and weeks -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <button class="submit-btn">
+            <span class="material-icons">save</span>
+            Save Logbook
+        </button>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            
+            if(isDark) {
+                document.documentElement.style.setProperty('--primary', '#a78bfa');
+                document.documentElement.style.setProperty('--secondary', '#8b5cf6');
+                document.documentElement.style.setProperty('--text', '#f3f4f6');
+                document.documentElement.style.setProperty('--bg', '#111827');
+                document.documentElement.style.setProperty('--bg-container', '#1f2937');
+                document.documentElement.style.setProperty('--bg-section', '#374151');
+                document.documentElement.style.setProperty('--border', '#4b5563');
+                document.documentElement.style.setProperty('--table-border', '#4b5563');
+                document.documentElement.style.setProperty('--label-color', '#d1d5db');
+            } else {
+                document.documentElement.style.setProperty('--primary', '#6366f1');
+                document.documentElement.style.setProperty('--secondary', '#4f46e5');
+                document.documentElement.style.setProperty('--text', '#1f2937');
+                document.documentElement.style.setProperty('--bg', '#f8fafc');
+                document.documentElement.style.setProperty('--bg-container', '#ffffff');
+                document.documentElement.style.setProperty('--bg-section', '#ffffff');
+                document.documentElement.style.setProperty('--border', '#e5e7eb');
+                document.documentElement.style.setProperty('--table-border', '#f3f4f6');
+                document.documentElement.style.setProperty('--label-color', '#374151');
+            }
+            
+            document.querySelector('.theme-toggle span').textContent = 
+                isDark ? 'light_mode' : 'dark_mode';
+        }
+    </script>
+</body>
+</html>

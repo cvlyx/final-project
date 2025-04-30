@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@api/paychangu": "file:.api/apis/paychangu"
+  }
+}
