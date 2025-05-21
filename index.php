@@ -1,3 +1,7 @@
+<?php
+// index.php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,12 +34,9 @@
       color: var(--text-color);
     }
     /* Header (Hero) Styles */
-    .header { 
-      background: linear-gradient(
-          rgba(0, 33, 71, 0.9),
-          rgba(0, 33, 71, 0.9)
-        ),
-        url('/speedlight photography_3.jpg') no-repeat center/cover;
+    .header {
+      background: linear-gradient(rgba(0, 33, 71, 0.9), rgba(0, 33, 71, 0.9)),
+                  url('public/assets/images/speedlight photography_3.jpg') no-repeat center/cover;
       min-height: 100vh;
       color: white;
       position: relative;
@@ -369,6 +370,7 @@
   </style>
 </head>
 <body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Header Section -->
   <header class="header" id="home">
     <nav class="nav-container" aria-label="Main Navigation">
@@ -376,11 +378,11 @@
       <div class="logo">MZTEC</div>
       <!-- Desktop Nav Links -->
       <div class="nav-links">
-        <a href="index.php" class="active">Home</a>
-        <a href="courses.php">Courses</a>
-        <a href="admission.php">Admissions</a>
+        <a href="public/index.php" class="active">Home</a>
+        <a href="public/courses.php">Courses</a>
+        <a href="public/admission.php">Admissions</a>
         <a href="#contact">Contact</a>
-        <a href="login.php" class="register-btn">Sign in Now</a>
+        <a href="auth/login.php" class="register-btn">Sign in Now</a>
       </div>
       <!-- Mobile Menu Toggle -->
       <button class="menu-toggle" aria-label="Toggle Navigation" aria-controls="mobile-menu" aria-expanded="false">
@@ -390,11 +392,11 @@
       </button>
       <!-- Mobile Dropdown Menu -->
       <div class="mobile-menu" id="mobile-menu">
-        <a href="index.php" class="active">Home</a>
-        <a href="courses.php">Courses</a>
-        <a href="admission.php">Admissions</a>
+        <a href="public/index.php" class="active">Home</a>
+        <a href="public/courses.php">Courses</a>
+        <a href="public/admission.php">Admissions</a>
         <a href="#contact">Contact</a>
-        <a href="login.php" class="register-btn">Sign in Now</a>
+        <a href="auth/login.php" class="register-btn">Sign in Now</a>
       </div>
     </nav>
     <div class="hero">
@@ -456,74 +458,14 @@
       </div>
     </section>
 
-    <!-- Faculty Section -->
-    <section class="section" id="faculty">
-      <h2 class="section-title">Our Faculty</h2>
-      <div class="faculty-grid">
-        <div class="faculty-card">
-          <img src="PXL_20250201_120047844.PORTRAIT.ORIGINAL.jpg" alt="Faculty Member">
-          <h4>Dr. Thiggar mnyenyembe</h4>
-          <p>Professor of Engineering</p>
-        </div>
-        <div class="faculty-card">
-          <img src="PXL_20250201_120007291.PORTRAIT.jpg" alt="Faculty Member">
-          <h4>Mr. Donia bravo</h4>
-          <p>Senior Lecturer</p>
-        </div>
-        <div class="faculty-card">
-          <img src="PXL_20250201_115922227.PORTRAIT.jpg" alt="Faculty Member">
-          <h4>Ms. Anita madamu</h4>
-          <p>Associate Professor</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Events Section -->
-    <section class="section" id="events">
-      <h2 class="section-title">Upcoming Events</h2>
-      <div class="events-grid">
-        <div class="event-card">
-          <h3>Open House</h3>
-          <p>Join us for a campus tour and meet our faculty on May 15, 2025.</p>
-        </div>
-        <div class="event-card">
-          <h3>Tech Expo</h3>
-          <p>Explore the latest innovations in technology on June 10, 2025.</p>
-        </div>
-        <div class="event-card">
-          <h3>Career Fair</h3>
-          <p>Network with top companies and discover career opportunities on July 5, 2025.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- News Section -->
-    <section class="section" id="news">
-      <h2 class="section-title">Latest News</h2>
-      <div class="news-grid">
-        <div class="news-card">
-          <h3>New Research Center Launched</h3>
-          <p>MZTEC University has inaugurated a state-of-the-art research center for emerging technologies.</p>
-        </div>
-        <div class="news-card">
-          <h3>Scholarship Announcements</h3>
-          <p>Several new scholarships have been introduced to support deserving students.</p>
-        </div>
-        <div class="news-card">
-          <h3>Industry Partnerships</h3>
-          <p>We are proud to announce new partnerships with leading industry players.</p>
-        </div>
-      </div>
-    </section>
-
     <!-- Gallery Section -->
     <section class="section" id="gallery">
       <h2 class="section-title">Campus Gallery</h2>
       <div class="gallery-grid">
         <img src="https://tse3.mm.bing.net/th/id/OIP.NhnVxc2cA5mrmXOKmjQMAAHaFj?rs=1&pid=ImgDetMain" alt="Campus Image">
-        <img src="speedlight photography_3.jpg" alt="Campus Image">
-        <img src="speedlight photography_8.JPG" alt="Campus Image">
-        <img src="speedlight photography_16.JPG" alt="Campus Image">
+        <img src="public/assets/images/speedlight photography_3.jpg" alt="Campus Image">
+        <img src="public/assets/images/speedlight photography_8.JPG" alt="Campus Image">
+        <img src="public/assets/images/speedlight photography_16.JPG" alt="Campus Image">
       </div>
     </section>
 
@@ -618,6 +560,22 @@
         link.classList.add('active');
       }
     });
+  
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('payment') === 'success') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Payment Successful!',
+        text: 'Thank you for your payment. Your admission application has been submitted.',
+        confirmButtonText: 'OK',
+        timer: 5000,
+        timerProgressBar: true
+      }).then(() => {
+        // Remove query param from URL so popup won't show on reload
+        window.history.replaceState({}, document.title, window.location.pathname);
+      });
+    }
+  
   </script>
 </body>
 </html>
